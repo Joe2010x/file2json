@@ -88,41 +88,68 @@ The file contains a lot of data, but you only need to extract a subset of it in 
 
 The first line is a header line containing constant information for all subsequent lines.
 
+Example:
+```
+VH;EFONELFO;4.0;NO979692900MVA;;;20230321;;NOK;;Onninen AS;ONNINEN AS - H�GSLUNDVEIEN 55;;2020;SKEDSMOKORSET;NO
+```
+
 Cells to verify:
-1. Must be: VH
-2. Must be: EFONELFO
-3. Must be: 4.0
+```
+Cell #1 - Must be: VH
+Cell #2 - Must be: EFONELFO
+Cell #3 - Must be: 4.0
+```
 
 Cells to extract:
-4. Seller's organization number
-11. Seller's organization name
+```
+Cell #4  - Seller's organization number
+Cell #11 - Seller's organization name
+```
 
 ### VL Record
 
 The VL record marks the beginning of each product line and contains information about the product.
 
+Example:
+```
+VL;1;1000000;�LFLEX� 2YSLCYK-JB3X1,5+3G0,25; EMC/VFD FREKVENSOMFORMER KABE;2;MTR;METER;11570;10000;20230322;1;010206;F3Y;LAPP NORWA;;N;10000;;
+```
+
 Cells to verify:
-1. Must be: VL
-2. Must be: 1 (Skip products with different numbers)
+```
+Cell #1 - Must be: VL
+Cell #2 - Must be: 1 (Skip products with different numbers)
+```
 
 Cells to extract:
-3. Product number
-4. Product description
-7. Product price unit
-9. Product price
-10. Product quantity
-17. Stock product (J/N or empty)
+```
+Cell #3  - Product number
+Cell #4  - Product description
+Cell #7  - Product price unit
+Cell #9  - Product price
+Cell #10 - Product quantity
+Cell #17 - Stock product (J/N or empty)
+```
 
 ### VX Record
 
 The VX record contains additional information. Extract the weight if it is available.
 
+Example:
+```
+VX;VEKT;226
+```
+
 Cells to verify:
-1. Must be: VX
-2. Must be: VEKT (Skip products with different numbers)
+```
+Cell #1 - Must be: VX
+Cell #2 - Must be: VEKT (Skip products with different numbers)
+```
 
 Cells to extract:
-3. Product weight
+```
+Cell #3 - Product weight
+```
 
 ### Other Records
 

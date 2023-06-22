@@ -41,7 +41,7 @@ public class NelfoUploadController : ControllerBase
         };
     }
 
-    [HttpGet("[action]")]
+    [HttpGet]
     public Pricetilbud FileToJson ()
     {
 
@@ -89,6 +89,36 @@ public class NelfoUploadController : ControllerBase
                 priceOffer.addWeight(ruleLine_VX.produce<VXRecord>(lines[i]));
         }
         return priceOffer;
+    }
+
+    [HttpGet]
+    public Pricetilbud FTJSimple()
+    {
+        var lines = _fileReader.GetLinesOfWords();
+
+        var priceOffer = new Pricetilbud();
+        lines.ForEach(l => {
+            if (l[0] == "VH" 
+                && l[1] ==  "EFONELFO"
+                && l[2] ==  "4.0")
+                {
+                    priceOffer.seller.orgNo = l[3];
+                    priceOffer.seller.orgName = l[10];
+                }
+            if (l[0] == "VL"
+                && l[1] == "1") 
+                {
+                    priceOffer.addProduct(new Product(
+                        l[2],l[3],l[6],l[8],l[9],l[16]
+                    ));
+                }
+            if (l[0] == "VX" && l[1] == "VEKT") 
+                priceOffer.addWeight(l[2]);
+
+        });
+
+        return priceOffer;
 
     }
+
 }

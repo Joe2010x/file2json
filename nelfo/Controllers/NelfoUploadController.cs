@@ -42,7 +42,7 @@ public class NelfoUploadController : ControllerBase
     }
 
     [HttpGet("[action]")]
-    public List<List<string>> FileToJson ()
+    public Pricetilbud FileToJson ()
     {
 
        var lines = _fileReader.GetLinesOfWords();
@@ -75,6 +75,20 @@ public class NelfoUploadController : ControllerBase
 
         var ruleLine_VX = new RuleLine("VX", rules_VXRecord);
 
+        var priceOffer = new Pricetilbud();
+
+        for ( var i=0; i<lines.Count(); i++)
+        {
+            if (ruleLine_VH.isValid(lines[i])) 
+                priceOffer.seller = new Seller(ruleLine_VH.produce<VHRecord>(lines[i]));
+
+            if (ruleLine_VL.isValid(lines[i])) {
+                priceOffer.addProduct(new Product(ruleLine_VL.produce<VLRecord>(lines[i])));
+            }
+            if (ruleLine_VX.isValid(lines[i])) 
+                priceOffer.addWeight(ruleLine_VX.produce<VXRecord>(lines[i]));
+        }
+        return priceOffer;
 
     }
 }

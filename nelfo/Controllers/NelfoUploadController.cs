@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using cwproj.Services;
+using cwproj.Models;
 
 namespace cwproj.Controllers;
 
@@ -18,9 +20,13 @@ public class NelfoUploadController : ControllerBase
 {
     private readonly ILogger<NelfoUploadController> _logger;
 
-    public NelfoUploadController(ILogger<NelfoUploadController> logger)
+    private readonly IFileReader _fileReader;
+
+    public NelfoUploadController(ILogger<NelfoUploadController> logger,
+    IFileReader fileReader)
     {
         _logger = logger;
+        _fileReader = fileReader;
     }
 
     [HttpPost]
@@ -32,5 +38,12 @@ public class NelfoUploadController : ControllerBase
         {
             Message = "OK"
         };
+    }
+
+    [HttpGet("[action]")]
+    public List<List<string>> FileToJson ()
+    {
+
+       return _fileReader.GetLinesOfWords();
     }
 }

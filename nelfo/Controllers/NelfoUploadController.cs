@@ -33,7 +33,7 @@ public class NelfoUploadController : ControllerBase
     [HttpPost]
     public HealthCheckResponse HealthCheck(HealthCheckRequest? req)
     {
-        _logger.LogInformation($"HealthCheck: {req?.CheckMoreStuff??false}");
+        _logger.LogInformation($"HealthCheck: {req?.CheckMoreStuff ?? false}");
 
         return new HealthCheckResponse()
         {
@@ -44,7 +44,6 @@ public class NelfoUploadController : ControllerBase
     [HttpGet]
     public Pricetilbud FileToJson ()
     {
-
        var lines = _fileReader.GetLinesOfWords();
 
        var rules_VHRecord = new List<Rule>();
@@ -102,7 +101,7 @@ public class NelfoUploadController : ControllerBase
                 && l[1] ==  "EFONELFO"
                 && l[2] ==  "4.0")
                 {
-                    priceOffer.seller.orgNo = l[3];
+                    priceOffer.seller!.orgNo = l[3];
                     priceOffer.seller.orgName = l[10];
                 }
             if (l[0] == "VL"
